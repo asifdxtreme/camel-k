@@ -78,6 +78,7 @@ func newCmdInstall(rootCmdOptions *RootCmdOptions) *cobra.Command {
 	cmd.Flags().StringVar(&impl.buildStrategy, "build-strategy", "", "Set the build strategy")
 	cmd.Flags().StringVar(&impl.buildTimeout, "build-timeout", "", "Set how long the build process can last")
 	cmd.Flags().StringVar(&impl.traitProfile, "trait-profile", "", "The profile to use for traits")
+	cmd.Flags().BoolVar(&impl.kanikoBuildCache, "kaniko-build-cache", true, "To enable or disable the Kaniko Cache in building phase")
 	cmd.Flags().StringVar(&impl.httpProxySecret, "http-proxy-secret", "", "Configure the source of the secret holding HTTP proxy server details "+
 		"(HTTP_PROXY|HTTPS_PROXY|NO_PROXY)")
 
@@ -105,6 +106,8 @@ type installCmdOptions struct {
 	skipOperatorSetup bool
 	skipClusterSetup  bool
 	exampleSetup      bool
+	global            bool
+	kanikoBuildCache  bool
 	outputFormat      string
 	camelVersion      string
 	runtimeVersion    string
@@ -123,7 +126,7 @@ type installCmdOptions struct {
 }
 
 // nolint: gocyclo
-func (o *installCmdOptions) install(_ *cobra.Command, _ []string) error {
+func (o *installCmdOptions) install(cobraCmd *cobra.Command, _ []string) error {
 	var collection *kubernetes.Collection
 	if o.outputFormat != "" {
 		collection = kubernetes.NewCollection()
@@ -277,6 +280,14 @@ func (o *installCmdOptions) install(_ *cobra.Command, _ []string) error {
 		platform.Spec.Resources.Contexts = o.contexts
 		if o.httpProxySecret != "" {
 			platform.Spec.Build.HTTPProxySecret = o.httpProxySecret
+		}
+
+		kanikoBuildCacheFlag := cobraCmd.Flags().Lookup("kaniko-build-cache")
+
+		if kanikoBuildCacheFlag.Changed {
+			platform.Spec.Build.KanikoBuildCache = o.kanikoBuildCache
+		} else {
+			platform.Spec.Build.KanikoBuildCache = true
 		}
 
 		platform.Spec.Resources.Kits = o.kits
