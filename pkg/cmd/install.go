@@ -239,6 +239,10 @@ func (o *installCmdOptions) install(cobraCmd *cobra.Command, _ []string) error {
 
 		kanikoBuildCacheFlag := cobraCmd.Flags().Lookup("kaniko-build-cache")
 
+		fmt.Print("Asif###############################################")
+		fmt.Println(*platform.Spec.Build.KanikoBuildCache)
+		fmt.Println(&platform.Spec.Build.KanikoBuildCache)
+
 		if kanikoBuildCacheFlag.Changed {
 			*platform.Spec.Build.KanikoBuildCache = o.kanikoBuildCache
 		} else {
