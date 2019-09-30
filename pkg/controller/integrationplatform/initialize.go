@@ -149,7 +149,6 @@ func (action *initializeAction) Handle(ctx context.Context, platform *v1alpha1.I
 		fmt.Println(*platform.Spec.Build.KanikoBuildCache)
 		fmt.Println(&platform.Spec.Build.KanikoBuildCache)
 
-
 		// Check if the operator is running in the same namespace before starting the cache warmer
 		if platform.Namespace == platformutil.GetOperatorNamespace() && *platform.Spec.Build.KanikoBuildCache {
 			// Create the Kaniko warmer pod that caches the base image into the Camel K builder volume
