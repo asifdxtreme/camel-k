@@ -101,7 +101,7 @@ type IntegrationPlatformBuildSpec struct {
 	PersistentVolumeClaim string                                  `json:"persistentVolumeClaim,omitempty"`
 	Maven                 MavenSpec                               `json:"maven,omitempty"`
 	HTTPProxySecret       string                                  `json:"httpProxySecret,omitempty"`
-	KanikoBuildCache      bool                                    `json:"kanikoBuildCache,omitempty"`
+	KanikoBuildCache      *bool                                   `json:"kanikoBuildCache,omitempty"`
 }
 
 // IntegrationPlatformRegistrySpec --
