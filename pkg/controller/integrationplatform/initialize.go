@@ -136,11 +136,19 @@ func (action *initializeAction) Handle(ctx context.Context, platform *v1alpha1.I
 			return nil, err
 		}
 
+		fmt.Print("Asif###########################123####################")
+		fmt.Println(*platform.Spec.Build.KanikoBuildCache)
+		fmt.Println(&platform.Spec.Build.KanikoBuildCache)
+		deafultCacheValue := true
 		// Check if the KanikoBuildCache has been initialized
 		if platform.Spec.Build.KanikoBuildCache == nil {
 			//if not initialized then default it to true
-			*platform.Spec.Build.KanikoBuildCache = true
+			platform.Spec.Build.KanikoBuildCache = &deafultCacheValue
 		}
+		fmt.Print("Asif############################1234###################")
+		fmt.Println(*platform.Spec.Build.KanikoBuildCache)
+		fmt.Println(&platform.Spec.Build.KanikoBuildCache)
+
 
 		// Check if the operator is running in the same namespace before starting the cache warmer
 		if platform.Namespace == platformutil.GetOperatorNamespace() && *platform.Spec.Build.KanikoBuildCache {

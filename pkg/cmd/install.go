@@ -243,11 +243,14 @@ func (o *installCmdOptions) install(cobraCmd *cobra.Command, _ []string) error {
 		fmt.Println(*platform.Spec.Build.KanikoBuildCache)
 		fmt.Println(&platform.Spec.Build.KanikoBuildCache)
 
+		defaultCacheValue :=true
 		if kanikoBuildCacheFlag.Changed {
-			*platform.Spec.Build.KanikoBuildCache = o.kanikoBuildCache
+			platform.Spec.Build.KanikoBuildCache = &o.kanikoBuildCache
 		} else {
-			*platform.Spec.Build.KanikoBuildCache = true
+			platform.Spec.Build.KanikoBuildCache = &defaultCacheValue
 		}
+		fmt.Println(*platform.Spec.Build.KanikoBuildCache)
+		fmt.Println(&platform.Spec.Build.KanikoBuildCache)
 
 		platform.Spec.Resources.Kits = o.kits
 
