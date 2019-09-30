@@ -240,9 +240,9 @@ func (o *installCmdOptions) install(cobraCmd *cobra.Command, _ []string) error {
 		kanikoBuildCacheFlag := cobraCmd.Flags().Lookup("kaniko-build-cache")
 
 		if kanikoBuildCacheFlag.Changed {
-			platform.Spec.Build.KanikoBuildCache = o.kanikoBuildCache
+			*platform.Spec.Build.KanikoBuildCache = o.kanikoBuildCache
 		} else {
-			platform.Spec.Build.KanikoBuildCache = true
+			*platform.Spec.Build.KanikoBuildCache = true
 		}
 
 		platform.Spec.Resources.Kits = o.kits
